@@ -6,6 +6,34 @@ import Image from "next/image"
 import { ArrowRight, Mail } from "lucide-react"
 import { motion } from "framer-motion"
 
+// 헤더 컴포넌트 자체 내장 (에러 원천 차단)
+function Header() {
+  return (
+    <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+      <Link href="/" className="flex items-center gap-2 group">
+        <div className="relative h-8 w-8 overflow-hidden rounded-lg">
+           <Image src="/logo.png" alt="Life Lab" width={32} height={32} className="object-contain" /> 
+        </div>
+        <span className="font-bold tracking-tight text-lg text-[#1d1d1f]">Life Lab.</span>
+      </Link>
+      <Link href="/contact">
+        <button className="rounded-full bg-[#1d1d1f] text-white px-6 py-2 text-sm font-medium hover:bg-black transition-colors">
+          문의하기
+        </button>
+      </Link>
+    </div>
+  )
+}
+
+// 푸터 컴포넌트 자체 내장
+function Footer() {
+  return (
+    <footer className="py-10 bg-white text-center text-sm text-gray-500 border-t">
+      <p>© 2025 Life Lab. All rights reserved.</p>
+    </footer>
+  )
+}
+
 export default function Page() {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
@@ -17,24 +45,12 @@ export default function Page() {
     <div className="flex min-h-screen flex-col bg-[#f5f5f7] text-[#1d1d1f] font-sans selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden">
       
       {/* 1. 헤더 */}
-      <motion.header 
+      <motion.div 
         initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.5 }}
         className="sticky top-0 z-50 w-full border-b border-gray-200/50 bg-white/70 backdrop-blur-xl"
       >
-        <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="relative h-8 w-8 overflow-hidden rounded-lg">
-               <Image src="/logo.png" alt="Life Lab" width={32} height={32} className="object-contain" /> 
-            </div>
-            <span className="font-bold tracking-tight text-lg text-[#1d1d1f]">Life Lab.</span>
-          </Link>
-          <Link href="/contact">
-            <button className="rounded-full bg-[#1d1d1f] text-white px-6 py-2 text-sm font-medium hover:bg-black transition-colors">
-              문의하기
-            </button>
-          </Link>
-        </div>
-      </motion.header>
+        <Header />
+      </motion.div>
 
       <main className="flex-1">
         {/* 2. 히어로 섹션 */}
@@ -66,7 +82,7 @@ export default function Page() {
           </motion.div>
         </section>
         
-        {/* 3. 프로그램 그리드 (간소화) */}
+        {/* 3. 프로그램 그리드 */}
         <section className="py-32 bg-[#f5f5f7] px-4">
           <div className="container mx-auto max-w-6xl grid gap-8 md:grid-cols-3">
              <div className="bg-white p-10 rounded-[2.5rem] shadow-sm flex flex-col items-center text-center">
@@ -84,9 +100,7 @@ export default function Page() {
           </div>
         </section>
       </main>
-      <footer className="py-10 bg-white text-center text-sm text-gray-500 border-t">
-        <p>© 2025 Life Lab. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   )
 }
